@@ -50,10 +50,37 @@ fetchRandomCatImage(); // call the function to fetch and display the image
 document
   .getElementById("cat-button")
   .addEventListener("click", fetchRandomCatImage);
-//write an async function to get an image of a random cat
-// display it in the corect cat api element
 
 //write an async function to retrive real-time weather data
+const currentWeatherButton = document.getElementById("weather-button");
+const weatherOutput = document.getElementById("weather-output");
+
+async function fetchWeatherInfo() {
+  try {
+    const response = await fetch(
+      "https://api.open-meteo.com/v1/forecast?latitude=41.6688&longitude=70.2962&daily=temperature_2m_max,temperature_2m_min&current=temperature_2m&timezone=America%2FNew_York&temperature_unit=fahrenheit"
+    );
+    const data = await response.json();
+
+    weatherOutput.innerHTML = ""; // clear the previous weather data
+
+    const weatherInfo = document.createElement("p");
+    weatherInfo.textContent = [
+      `Current Temperature: ${data.current.temperature_2m}°F`,
+      `Max Temperature: ${data.daily.temperature_2m_max[0]}°F`,
+      `Min Temperature: ${data.daily.temperature_2m_min[0]}°F`,
+    ];
+    weatherOutput.appendChild(weatherInfo); // append the weather info to the container
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+  }
+}
+fetchWeatherInfo(); // call the function to fetch and display the weather data
+
+document
+  .getElementById("weather-button")
+  .addEventListener("click", fetchWeatherInfo); // add an event listener to the button to call the function when clicked
+
 // display the weather data in the correct weather api element
 
 // for currency exchange lets put four input fields
