@@ -29,15 +29,36 @@
 
       <section class="grid-item" id="currency-api">
         <h2>💱 Currency Rates</h2>
-        <button onclick="getExchangeRates()">Get Rates</button>
-        <div class="output" id="currency-output"></div>
+        <button id="currency-exchange-button" class="exchange-button">Get Rates</button>
+        <div class="output" id="currency-output">
+          <div>
+            <input type="number" id="amount" placeholder="Amount" />
+            <select id="from-currency">
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+              <option value="JPY">JPY</option>
+            </select>
+            <select id="to-currency">
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+              <option value="JPY">JPY</option>
+            </select>
+            <input type="text" id="result" placeholder="Result" readonly />
+           </div>
+           <p id="conversion-message"></p>
+        </div>
+          
       </section>
 
       <section class="grid-item" id="movies-api">
         <h2>🎮 Trending Movies</h2>
-        <button onclick="getMovies()">Get Movies</button>
-        <div class="output" id="movies-output"></div>
+        <button id="trending-movies-button">Get Movies</button>
+        <div class="output" id="trending-movies-output"></div>
       </section>
+          
+        
 
       <section class="grid-item" id="github-api">
         <h2>🧑‍💻 GitHub User</h2>

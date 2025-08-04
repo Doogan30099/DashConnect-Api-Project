@@ -1,59 +1,96 @@
 * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
 
-    body {
-      background-color: #f4f4f4;
-      padding: 2rem;
-    }
+body {
+  background-color: #f4f4f4;
+  padding: 2rem;
+}
 
-    .main-title {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
+.main-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
 
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
+.grid-container {
+  height: auto;
+  width: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
 
-    .grid-item {
-      background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+.grid-item {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-height: 439.2px;
+}
 
-    .grid-item h2 {
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
-    }
+.grid-item h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
 
-    .grid-item button {
-      padding: 0.5rem 1rem;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-bottom: 1rem;
-    }
+.grid-item button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
 
-    .grid-item button:hover {
-      background-color: #0056b3;
-    }
+.grid-item button:hover {
+  background-color: #0056b3;
+}
 
-    .output {
-      margin-top: 0.5rem;
-    }
+.output {
+  margin-top: 0.5rem;
+}
 
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 5px;
-      margin-top: 0.5rem;
-    }
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+}
+
+.movie {
+  flex: 1 1 100%;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  max-width: 100%;
+}
+
+.movie img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+#trending-movies-output {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  overflow-y: auto;
+  flex-grow: 1;
+  padding-right: 5px;
+
+
+}
+
+#movies-api {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  overflow-y: auto;
+  flex-grow: 1; 
+  padding-right: 5px;
+}

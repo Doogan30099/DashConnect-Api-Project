@@ -62,14 +62,16 @@ async function fetchWeatherInfo() {
     );
     const data = await response.json();
 
+    const weatherInfo = document.createElement("p");
+    weatherInfo.innerHTML = [
+      `
+  Current Temperature: ${data.current.temperature_2m}°F<br>
+  Max Temperature: ${data.daily.temperature_2m_max[0]}°F<br>
+  Min Temperature: ${data.daily.temperature_2m_min[0]}°F
+`,
+    ];
     weatherOutput.innerHTML = ""; // clear the previous weather data
 
-    const weatherInfo = document.createElement("p");
-    weatherInfo.textContent = [
-      `Current Temperature: ${data.current.temperature_2m}°F`,
-      `Max Temperature: ${data.daily.temperature_2m_max[0]}°F`,
-      `Min Temperature: ${data.daily.temperature_2m_min[0]}°F`,
-    ];
     weatherOutput.appendChild(weatherInfo); // append the weather info to the container
   } catch (error) {
     console.error("Error fetching weather data:", error);
@@ -84,5 +86,79 @@ document
 // display the weather data in the correct weather api element
 
 // for currency exchange lets put four input fields
+const currencyExchangeButton = document.getElementById(
+  "currency-exchange-button"
+);
+const currencyExchangeOutput = document.getElementById("currency-output");
+const amount = document.getElementById("amount").value;
+const fromCurrency = document.getElementById("from-currency").value;
+const toCurrency = document.getElementById("to-currency").value;
+
+async function fetchCurrencyExchangeRate() {
+  try {
+    const response = await fetch(
+      `https://api.frankfurter.app/latest?amount=${amount}&from=${fromCurrency}&to=${toCurrency}`
+    );
+
+    const data = await response.json();
+    const message = document.getElementById("conversion-message");
+
+    if (data.rates[toCurrency]) {
+      const exchangeRate = data.rates[toCurrency];
+      const result = (amount * exchangeRate).toFixed(2);
+
+      message.textContent = `Converted Amount: ${result} ${toCurrency}`;
+      document.getElementById("result").value = `${result} ${toCurrency}`;
+    } else {
+      message.textContent = "Invalid currency code.";
+      document.getElementById("result").value = "";
+    }
+    currencyExchangeOutput.innerHTML = ""; // clear the previous exchange rate
+  } catch (error) {
+    console.error("Error fetching exchange rate:", error);
+    currencyExchangeOutput.innerHTML = "Error fetching exchange rate.";
+  }
+}
+
+currencyExchangeButton.addEventListener("click", fetchCurrencyExchangeRate); // add an event listener to the button to call the function when clicked
+
 // one for the amount, one for the from currency, one for the to currency and one for the result
 // write an async function to get the exchange rate and display the result in the result field
+
+const getTrendingMovies = document.getElementById("trending-movies-button");
+const trendingMoviesOutput = document.getElementById("trending-movies-output");
+async function getMovies() {
+  try {
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNjY3ZGQ4MmJkNTgyMDAyOTMzNWVhY2VjMTYyYzFkMCIsIm5iZiI6MTc1NDI2ODA1Ny42MjksInN1YiI6IjY4OTAwMTk5YTc3MDExNmFkZGIyMzBiMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.rchNB8YceYU9LrnK-jBainoDgY6ozGEHRftlXWLLQxk",
+      },
+    };
+    const response = await fetch(
+      "https://api.themoviedb.org/3/trending/movie/day?language=en-US",
+      options
+    );
+    const data = await response.json();
+    trendingMoviesOutput.innerHTML = ""; // clear the previous movies data
+    const trendingMovies = data.results;
+
+    trendingMovies.forEach((movie) => {
+      const movieElement = document.createElement("div");
+      movieElement.classList.add("movie");
+      movieElement.innerHTML = `
+      <h3>${movie.title}</h3>
+      <p>Release Date: ${movie.release_date}</p>
+      <p>Rating: ${movie.vote_average}</p>
+      <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+    `;
+      trendingMoviesOutput.appendChild(movieElement);
+    });
+  } catch (error) {
+    console.error("Error fetching trending movies:", error);
+    trendingMoviesOutput.innerHTML = "Error fetching trending movies.";
+  }
+}
+getTrendingMovies.addEventListener("click", getMovies); // add an event listener to the button to call the function when clicked
