@@ -83,9 +83,8 @@ document
   .getElementById("weather-button")
   .addEventListener("click", fetchWeatherInfo); // add an event listener to the button to call the function when clicked
 
-// display the weather data in the correct weather api element
+// currency exchange rate api 
 
-// for currency exchange lets put four input fields
 const currencyExchangeButton = document.getElementById(
   "currency-exchange-button"
 );
@@ -122,8 +121,11 @@ async function fetchCurrencyExchangeRate() {
 
 currencyExchangeButton.addEventListener("click", fetchCurrencyExchangeRate); // add an event listener to the button to call the function when clicked
 
-// one for the amount, one for the from currency, one for the to currency and one for the result
-// write an async function to get the exchange rate and display the result in the result field
+
+
+
+// get trending movies for the day
+
 
 const getTrendingMovies = document.getElementById("trending-movies-button");
 const trendingMoviesOutput = document.getElementById("trending-movies-output");
@@ -162,3 +164,45 @@ async function getMovies() {
   }
 }
 getTrendingMovies.addEventListener("click", getMovies); // add an event listener to the button to call the function when clicked
+
+
+
+// Get github user profile
+
+
+const gitHubUserButton = document.getElementById("github-button");
+const gitHubUserProfile = document.getElementById("github-output");
+
+async function getGitHubUser() {
+  const username = document.getElementById("user-name");
+  const password = document.getElementById("password")
+  if (!username.value || !password.value) {
+    alert("Please enter both email and password.");
+    return;
+  }
+  try {
+    const response = await fetch(
+      `https://api.github.com/users/${username.value}`,
+      {
+        headers: {
+          Authorization: `Basic ${btoa(`${username.value}:${password.value}`)}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error("User not found or authentication failed.");
+    }
+    const data = await response.json();
+    gitHubUserProfile.innerHTML = `
+      <h3>${data.login}</h3>
+      <p>${data.bio || "No bio available."}</p>
+      <img src="${data.avatar_url}" alt="${data.login}" width="100">
+    `;
+  } catch (error) {
+    console.error("Error fetching GitHub user:", error);
+    gitHubUserProfile.innerHTML = "Error fetching GitHub user.";
+  }
+
+}
+
+gitHubUserButton.addEventListener("click", getGitHubUser);
