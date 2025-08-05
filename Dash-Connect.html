@@ -62,7 +62,7 @@
 
       <section class="grid-item" id="github-api">
         <h2>🧑‍💻 GitHub User</h2>
-        <button onclick="getGitHubUser()">Get User</button>
+        <button id="github-button" onclick="getGitHubUser()">Get User</button>
         <div> 
           <label for="user-name">Username</label>
           <input type="email" id="user-name" name="user-name" placeholder="Enter your Username" required><br>  
@@ -74,14 +74,14 @@
 
       <section class="grid-item" id="joke-api">
         <h2>🤣 Random Joke</h2>
-        <button onclick="getJoke()">Get Joke</button>
+        <button id="get-jokes-button" onclick="getJoke()">Get Joke</button>
         <div class="output" id="joke-output"></div>
       </section>
 
-      <section class="grid-item" id="public-api">
+      <section class="grid-item" id="stokc-market-api">
         <h2>📚 Public APIs</h2>
-        <button onclick="getPublicApiInfo()">Show One</button>
-        <div class="output" id="publicapi-output"></div>
+        <button id="stock-market-button">Show One</button>
+        <div class="output" id="stock-market-output"></div>
       </section>
     </div>
 

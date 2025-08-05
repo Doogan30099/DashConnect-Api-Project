@@ -96,7 +96,7 @@ const toCurrency = document.getElementById("to-currency").value;
 async function fetchCurrencyExchangeRate() {
   try {
     const response = await fetch(
-      `https://api.frankfurter.app/latest?amount=${amount}&from=${fromCurrency}&to=${toCurrency}`
+      `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json`
     );
 
     const data = await response.json();
@@ -206,3 +206,66 @@ async function getGitHubUser() {
 }
 
 gitHubUserButton.addEventListener("click", getGitHubUser);
+
+
+//async function to get rando jokes from api 
+  const getRandomJokesButton = document.getElementById("get-jokes-button");
+  const jokeOutput =document.getElementById("joke-output");
+
+
+async function getJoke() { 
+ 
+
+  try {
+    const response = await fetch("https://official-joke-api.appspot.com/random_joke");
+    const data = await response.json();
+    const jokeElement = document.createElement("div")
+    jokeElement.classList.add("joke");  
+    jokeOutput.innerText = "";
+    jokeElement.innerHTML = `
+    <h3>${data.setup}</h3>
+    <p>${data.punchline}</p>
+    `;
+    jokeOutput.appendChild(jokeElement);
+  }catch (error) {
+    console.error("Error fetching joke:", error);
+    jokeOutput.innerHTML = "Error fetching joke.";
+} 
+  }
+getRandomJokesButton.addEventListener("click", getJoke); 
+
+//make an async function to retrieve real time market data from public api
+const getStockMarketInfoButton = document.getElementById("stock-market-button");
+const stockMarketInfoOutput = document.getElementById("stock-market-output");
+const url =
+  "https://api.marketstack.com/v1/eod?access_key=d76839431f68e37d2300f7918f477b7c&symbols=MSTY";
+const options = {
+  method: "GET",
+};
+
+async function getCurrentStockPrice() {
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+
+    stockMarketInfoOutput.innerHTML = ""; 
+    const stockData = data.data[0]; 
+    const stockElement = document.createElement("div");
+    stockElement.classList.add("stock");
+
+    stockElement.innerHTML = `
+      <h3>Symbol: ${stockData.symbol}</h3>
+      <p>Open: ${stockData.open}</p>
+      <p>Close: ${stockData.close}</p>
+      <p>Volume: ${stockData.volume}</p>
+      <p>Date: ${stockData.date}</p>
+    `;
+
+    stockMarketInfoOutput.appendChild(stockElement); // 
+  } catch (error) {
+    console.error("Error fetching stock market data:", error);
+    stockMarketInfoOutput.innerHTML = "Error fetching stock market data.";
+  }
+}
+
+getStockMarketInfoButton.addEventListener("click", getCurrentStockPrice);
